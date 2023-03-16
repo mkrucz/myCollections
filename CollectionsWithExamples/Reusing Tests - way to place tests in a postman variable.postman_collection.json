@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "f5f30b26-74b3-495c-a0bf-bd7e72b36843",
+		"name": "Reusing Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23471881"
+	},
+	"item": [
+		{
+			"name": "example",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"eval(pm.environment.get(\"commonTests\"))();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let CommonTests = () => {\r",
+							"    pm.test(\"status code ok\", () => {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    })\r",
+							"\r",
+							"    pm.test(\"header ok\", () => {\r",
+							"        pm.response.to.have.header(\"Content-Type\");\r",
+							"    })\r",
+							"\r",
+							"    pm.test(\"response time less than 300ms\", () =>\r",
+							"    {\r",
+							"        pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"    })\r",
+							"}\r",
+							"\r",
+							"pm.environment.set(\"commonTests\", CommonTests.toString())"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "example.com",
+					"host": [
+						"example",
+						"com"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

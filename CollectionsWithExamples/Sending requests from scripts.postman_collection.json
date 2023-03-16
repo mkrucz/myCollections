@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "f03aecb4-fecd-4f7b-8d3c-4d118a7b9265",
+		"name": "Sending requests from scripts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23471881"
+	},
+	"item": [
+		{
+			"name": "1 request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"https://httpbin.org/post\", function (err, response) {\r",
+							"    const data = pm.response.json()\r",
+							"   // console.log(response.json());\r",
+							"    pm.globals.set(\"uuid\", data.uuid) //this code is ASYNCHRONOUS. it will be executed as soon as response is back\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "foo",
+						"value": "bar",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Johnny\",\r\n    \"id\": {{uuid}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://httpbin.org/post",
+					"protocol": "https",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "fb06d40d-1449-4576-ba29-be206f5cffd2",
+		"name": "Complex assertions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23471881"
+	},
+	"item": [
+		{
+			"name": "1 - Nested object",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"console.log(response.other[\"social-media\"][1]);",
+							"",
+							"pm.test(\"Person is Jane\", () => {",
+							"    pm.expect(response.name).to.eql(\"Jane\");",
+							"    pm.expect(response.age).to.eql(29);",
+							"    pm.expect(response.other.email).to.eql(\"jane@example.com\");",
+							"    pm.expect(response.other[\"social-media\"]).to.include(\"Instagram\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://run.mocky.io/v3/25e2d802-a744-470d-8c60-6acb338407e9",
+					"protocol": "https",
+					"host": [
+						"run",
+						"mocky",
+						"io"
+					],
+					"path": [
+						"v3",
+						"25e2d802-a744-470d-8c60-6acb338407e9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - Simple array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"// console.log(response.other[\"social-media\"][1]);",
+							"",
+							"const person = response[0];",
+							"",
+							"pm.test(\"Person is Jane\", () => {",
+							"    pm.expect(person.name).to.eql(\"Jane\");",
+							"    pm.expect(person.age).to.eql(29);",
+							"    pm.expect(person.other.email).to.eql(\"jane@example.com\");",
+							"    pm.expect(person.other[\"social-media\"]).to.include(\"Instagram\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://run.mocky.io/v3/76d67ddb-23dc-4947-b29f-6dcb83aa6a43",
+					"protocol": "https",
+					"host": [
+						"run",
+						"mocky",
+						"io"
+					],
+					"path": [
+						"v3",
+						"76d67ddb-23dc-4947-b29f-6dcb83aa6a43"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - Complex array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"// console.log(response.other[\"social-media\"][1]);",
+							"const person = response.find(item => item.name === \"Jane\");",
+							"pm.test(\"Person is Jane\", () => {",
+							"    pm.expect(person.name).to.eql(\"Jane\");",
+							"    pm.expect(person.age).to.eql(29);",
+							"    pm.expect(person.other.email).to.eql(\"jane@example.com\");",
+							"    pm.expect(person.other[\"social-media\"]).to.include(\"Instagram\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://run.mocky.io/v3/f8e66f89-6197-4cd2-83d6-3b8fca979ad0",
+					"protocol": "https",
+					"host": [
+						"run",
+						"mocky",
+						"io"
+					],
+					"path": [
+						"v3",
+						"f8e66f89-6197-4cd2-83d6-3b8fca979ad0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

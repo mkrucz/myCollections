@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "e2df6461-3933-40c2-aca4-1aeed8eb47a0",
+		"name": "Kurs postmana - Valentin's Book API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23471881"
+	},
+	"item": [
+		{
+			"name": "get status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mainUrl}}/status",
+					"host": [
+						"{{mainUrl}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get book list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mainUrl}}/books/lists",
+					"host": [
+						"{{mainUrl}}"
+					],
+					"path": [
+						"books",
+						"lists"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "mainUrl",
+			"value": "https://valentines-book-list.glitch.me",
+			"type": "string"
+		}
+	]
+}

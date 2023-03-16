@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "42c14224-619d-4ef9-a851-484d1f4e380f",
+		"name": "testing of headers and cookies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23471881"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.clear();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.response.headers.get('X-Cache')\r",
+							"\r",
+							"\r",
+							"pm.test(\"header istnieje\", () => {\r",
+							"    pm.response.to.have.header('X-Cache');\r",
+							"})\r",
+							"\r",
+							"pm.test(\"cookie ok\", () => {\r",
+							"    pm.expect(pm.cookies.has('sessionId')).to.be.true;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://run.mocky.io/v3/4322dcfc-07cd-4ebd-a45b-8e832a5abf7d",
+					"protocol": "https",
+					"host": [
+						"run",
+						"mocky",
+						"io"
+					],
+					"path": [
+						"v3",
+						"4322dcfc-07cd-4ebd-a45b-8e832a5abf7d"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "ccef4dad-e03c-4d20-8758-2b021d656d1d",
+		"name": "mocky from Postman course",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23471881"
+	},
+	"item": [
+		{
+			"name": "Assertions on arrays (for...of)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.clear();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"let manufacturer\r",
+							"\r",
+							"for (let filter of response.filters){\r",
+							"    if (filter.name == 'MANUFACTURER') {\r",
+							"        manufacturer = filter\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"console.log(manufacturer)\r",
+							"\r",
+							"pm.test(\"manufacturer is not allowed\", () => {\r",
+							"    pm.expect(manufacturer.name).to.eql(\"MANUFACTURER\");\r",
+							"    pm.expect(manufacturer.isAllowed).to.be.false;\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://www.mocky.io/v2/5ab350d62f00005a00ca3663",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mocky",
+						"io"
+					],
+					"path": [
+						"v2",
+						"5ab350d62f00005a00ca3663"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assertions on nested objects (for...in)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.clear();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"let commentsStatus = response.prefs.comments.status\r",
+							"\r",
+							"\r",
+							"pm.test(\"comments should be disabled\", () =>{\r",
+							"pm.expect(commentsStatus).to.eql('disabled');\r",
+							"})\r",
+							"\r",
+							"let status\r",
+							"\r",
+							"for (let key in response.limits) {\r",
+							"\r",
+							"    if (response.limits[key].hasOwnProperty('boards')) {\r",
+							"        \r",
+							"    status = response.limits[key].boards.totalPerMember.status\r",
+							"    console.log(status)\r",
+							"}}\r",
+							"\r",
+							"\r",
+							"pm.test('status should be ok', () => {\r",
+							"    pm.expect(status).to.eql(\"ok\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://www.mocky.io/v2/5ab34d8c2f00006600ca3652",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mocky",
+						"io"
+					],
+					"path": [
+						"v2",
+						"5ab34d8c2f00006600ca3652"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

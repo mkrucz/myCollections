@@ -1,0 +1,735 @@
+{
+	"info": {
+		"_postman_id": "a5852070-6981-47bd-8f71-f0c2151264c8",
+		"name": "UserLogin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24343054",
+		"_collection_link": "https://pierwszyprojekt.postman.co/workspace/Pierwszy-projekt~2dcf19a3-77a3-4b9e-9dfe-0c76eafd66ae/collection/13495937-a5852070-6981-47bd-8f71-f0c2151264c8?action=share&creator=24343054&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Register/Login/Logout",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.globals.set(\"Token\", response.token)\r",
+									"\r",
+									"console.log(response.token)\r",
+									"\r",
+									"pm.test(\"token is given\", () =>{\r",
+									"    pm.expect(response.token).to.be.a(\"string\");\r",
+									"\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Login",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Logout",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"string\",\r\n  \"name\": \"string\",\r\n  \"password\": \"string\",\r\n  \"mail\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Register",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.clear();"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"response = pm.response.json()",
+							"",
+							"pm.test(\"status code ok\", () => {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"request is successful\", () => {",
+							"    pm.expect(response.success).to.be.true;",
+							"    pm.expect(response.errorMessage).to.be.null",
+							"",
+							"})",
+							"",
+							"if (response.errorMessage != null) {",
+							"    console.log(response.errorMessage)",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Competences",
+			"item": [
+				{
+					"name": "List Competences",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear();"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//pm.response.headers.get();\r",
+									"\r",
+									"console.log(pm.response.headers)\r",
+									"\r",
+									"pm.test('header date recieved ok', () => {\r",
+									"    pm.response.to.have.header('Date');\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Competences",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Competences",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "q=jav\r\nshowCount=1\r\npage=1"
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences/Search",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences",
+								"Search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Competences",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences/Add",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search UserCompetences",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"competences\": [\r\n        \"java\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/UserCompetences/Search/",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"UserCompetences",
+								"Search",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Language",
+			"item": [
+				{
+					"name": "List Language",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Language",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Language"
+							]
+						},
+						"description": "Metoda uruchamiana przez frontend tylko przy pierwszym uruchomieniu, gdy jeszcze nie ma ciasteczka z językiem. zawsze wysyła domyślny język"
+					},
+					"response": []
+				},
+				{
+					"name": "Change Language",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear();"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"language cookie is english\", () =>{\r",
+									"    let setLanguage = pm.environment.get('language');\r",
+									"\r",
+									"console.log(setLanguage)\r",
+									"\r",
+									"    pm.expect(pm.cookies.get('language')).to.eql(setLanguage)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"language\": \"{{language}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Language",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Language"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reset Password",
+			"item": [
+				{
+					"name": "ResetPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/ResetPassword",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"ResetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword/{code}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/ResetPassword/{code}",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"ResetPassword",
+								"{code}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword/Confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/ResetPassword/Confirm",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"ResetPassword",
+								"Confirm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "List Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Roles",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Roles",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Roles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "List Logins",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Settings/Logins",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Settings",
+								"Logins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Devices",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Devices",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Devices"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (USE CAREFULLY ON ADMIN!!!)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User/Account",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User/Data",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User/Password",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User/Email",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User/{code}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User/{code}",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"{code}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User/Confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User/Confirm",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Confirm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

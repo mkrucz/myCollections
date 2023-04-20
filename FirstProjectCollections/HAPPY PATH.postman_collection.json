@@ -1,0 +1,703 @@
+{
+	"info": {
+		"_postman_id": "7ad2db4f-81f7-4214-89c0-6c9d621cdb42",
+		"name": "HAPPY PATH",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24343054",
+		"_collection_link": "https://pierwszyprojekt.postman.co/workspace/Pierwszy-projekt~2dcf19a3-77a3-4b9e-9dfe-0c76eafd66ae/collection/24343054-7ad2db4f-81f7-4214-89c0-6c9d621cdb42?action=share&creator=24343054&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"loginHappyPath\", pm.variables.replaceIn('{{$randomUserName}}'));\r",
+									"pm.collectionVariables.set(\"passwordHappyPath\", pm.variables.replaceIn('{{$randomPassword}}'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.collectionVariables.set(\"tokenHappyPath\", response.token)\r",
+									"\r",
+									"console.log(response.token)\r",
+									"\r",
+									"pm.test(\"token is given\", () =>{\r",
+									"    pm.expect(response.token).to.be.a(\"string\");\r",
+									"\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"{{loginHappyPath}}\",\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"password\": \"{{passwordHappyPath}}\",\r\n  \"mail\": \"{{$randomExampleEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Register",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.variables.set(\"tokenHappyPath\", response.token);\r",
+									"\r",
+									"pm.test(\"token is given\", () =>{\r",
+									"    pm.expect(response.token).to.be.a(\"string\");\r",
+									"   \r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"{{loginHappyPath}}\",\r\n  \"password\": \"{{passwordHappyPath}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Login",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"response = pm.response.json()",
+							"",
+							"pm.test(\"status code ok\", () => {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"request is successful\", () => {",
+							"    pm.expect(response.success).to.be.true;",
+							"    pm.expect(response.errorMessage).to.be.null",
+							"",
+							"})",
+							"",
+							"if (response.errorMessage != null) {",
+							"    console.log(response.errorMessage)",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "language",
+			"item": [
+				{
+					"name": "List Language",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear();"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json\r",
+									"console.log(pm.cookies.get(\"language\"));\r",
+									"\r",
+									"pm.test(\"language cookie is present\", () => {\r",
+									"    pm.expect(pm.cookies.has(\"language\")).to.be.true;\r",
+									"})\r",
+									"\r",
+									"pm.collectionVariables.set(\"languageHappyPath\", pm.cookies.get(\"language\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Language",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Language"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Language Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"language cookie is given and correct\", () =>{\r",
+									"    //let setLanguage = pm.variable.get('language');\r",
+									"    pm.expect(pm.cookies.has('language')).to.be.true;\r",
+									"    pm.expect(pm.cookies.get(\"language\")).to.eql(pm.variables.get(\"languageHappyPath\"));\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (pm.collectionVariables.get(\"languageHappyPath\") === \"en-US\") {\r",
+									"    pm.collectionVariables.set(\"languageHappyPath\", \"pl\")\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"language\": \"{{languageHappyPath}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Language",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Language"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "competences",
+			"item": [
+				{
+					"name": "Add Competences Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"if (!pm.variables.get(\"competenceHappyPath\")) {\r",
+									"    pm.collectionVariables.set(\"competenceHappyPath\", pm.variables.replaceIn('{{$randomWord}}'))\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{competenceHappyPath}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences/Add",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences",
+								"Add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Competences Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences/Search?q={{competenceHappyPath}}",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences",
+								"Search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{competenceHappyPath}}",
+									"description": "Query to search"
+								},
+								{
+									"key": "showCount",
+									"value": "10",
+									"description": "Number of results to return",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": null,
+									"description": "page number to show",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Competences Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Competences Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "List Role Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Roles",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Role Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Roles",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Roles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reset password",
+			"item": []
+		},
+		{
+			"name": "userInfo and logout",
+			"item": [
+				{
+					"name": "User info Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/User",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Logout",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Password reset",
+			"item": [
+				{
+					"name": "ResetPassword Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/ResetPassword",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"ResetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword/{code} Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/ResetPassword/{code}",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"ResetPassword",
+								"{code}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword/Confirm Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/ResetPassword/Confirm",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"ResetPassword",
+								"Confirm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete user",
+			"item": [
+				{
+					"name": "Login Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.globals.set(\"Token\", response.token)\r",
+									"\r",
+									"console.log(response.token)\r",
+									"\r",
+									"pm.test(\"token is given\", () =>{\r",
+									"    pm.expect(response.token).to.be.a(\"string\");\r",
+									"\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Mikrus}}/api/Login",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Competences Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Mikrus}}/api/Competences",
+							"host": [
+								"{{Mikrus}}"
+							],
+							"path": [
+								"api",
+								"Competences"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{tokenHappyPath}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"let response = pm.response.json();",
+					"",
+					"pm.test(\"request is successful\", () => {",
+					"    pm.expect(response.success).to.be.true;",
+					"    pm.expect(response.errorMessage).to.be.null",
+					"",
+					"})",
+					"",
+					"if (response.errorMessage != null) {",
+					"    console.log(response.errorMessage)",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "loginHappyPath",
+			"value": ""
+		},
+		{
+			"key": "passwordHappyPath",
+			"value": ""
+		},
+		{
+			"key": "tokenHappyPath",
+			"value": ""
+		},
+		{
+			"key": "languageHappyPath",
+			"value": ""
+		},
+		{
+			"key": "competenceHappyPath",
+			"value": ""
+		}
+	]
+}
